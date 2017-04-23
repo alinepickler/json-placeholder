@@ -1,0 +1,31 @@
+<html>
+
+<head>
+</head>
+
+<body>
+	<div id="post">
+		<p>Title:</p><span id="title"></span>
+		
+	</div>
+</body>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+	var root = 'https://jsonplaceholder.typicode.com';
+
+	$.ajax({
+	  url: root + '/posts/2',
+	  method: 'GET'
+	}).then(function(post) {
+	  console.log(post);
+	  $("#title").text(post.title);
+	  if(post.title.length > 20){
+		$("#title").css("background-color", "red");
+	  } else {
+		$("#title").css("background-color", "green");
+	  };
+	});
+</script>
+
+</html>
