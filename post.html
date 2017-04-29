@@ -1,0 +1,53 @@
+<html>
+
+<head>
+</head>
+
+<body>
+	<div id="post">
+      <p>Title:</p><span id="title"></span>
+      <p>Body:</p><span id="body"></span>
+  </div>
+
+  <div id="comments">
+  </div>
+</body>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+	var root = 'https://jsonplaceholder.typicode.com';
+
+  function getQueryParam(param) {
+  	var vars = {};
+  	window.location.href.replace( location.hash, '' ).replace(
+  		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+  		function( m, key, value ) { // callback
+  			vars[key] = value !== undefined ? value : '';
+  		}
+  	);
+
+  	if ( param ) {
+  		return vars[param] ? vars[param] : null;
+  	}
+  	return vars;
+  }
+
+  var postId = getQueryParam('postId');
+
+	$.ajax({
+	  url: root + '/posts/' + postId,
+	  method: 'GET'
+	}).then(function(post) {
+    $("#title").text(post.title);
+    $("#body").text(post.body);
+	});
+
+  $.ajax({
+	  url: root + '/comments?postId=' + postId,
+	  method: 'GET'
+	}).then(function(comments) {
+    console.log(comments);
+	});
+</script>
+
+</html>
