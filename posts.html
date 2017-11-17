@@ -4,15 +4,15 @@
 </head>
 
 <body>
-	<div id="new-post">
-		<form action="javascript:void(0);" id="create-post">
-			<input type="text" name="title" placeholder="Title">
-			<input type="text" name="body" placeholder="Body">
-			<input type="submit" value="Create">
-		</form>
-	</div>
+  <div id="new-post">
+    <form action="javascript:void(0);" id="create-post">
+      <input type="text" name="title" placeholder="Title">
+      <input type="text" name="body" placeholder="Body">
+      <input type="submit" value="Create">
+    </form>
+  </div>
 
-	<div id="posts"></div>
+  <div id="posts"></div>
 </body>
 
 <script src="jquery-3.2.1.min.js"></script>
@@ -20,36 +20,36 @@
 var root = 'https://jsonplaceholder.typicode.com';
 
 $.ajax({
-	url: root + '/posts',
-	method: 'GET'
+  url: root + '/posts',
+  method: 'GET'
 }).then(function(posts) {
-	for (i = 0; i < posts.length; i++) {
-		var $div = $("<div></div>");
-		var $a = $("<a></a>").text(posts[i].title).attr("href", "post.html?postId=" + posts[i].id);
-		$div.append($a);
-		$("#posts").append($div);
-	}
+  for (i = 0; i < posts.length; i++) {
+    var $div = $("<div></div>");
+    var $a = $("<a></a>").text(posts[i].title).attr("href", "post.html?postId=" + posts[i].id);
+    $div.append($a);
+    $("#posts").append($div);
+  }
 });
 
 $("#create-post").submit(function( event ) {
-	var $title = $("#create-post > [name='title']");
-	var $body = $("#create-post > [name='body']");
+  var $title = $("#create-post > [name='title']");
+  var $body = $("#create-post > [name='body']");
 
-	$.ajax('http://jsonplaceholder.typicode.com/posts', {
-		method: 'POST',
-		data: {
-			title: $title.val(),
-			body: $body.val(),
-			userId: 1
-		}
-	}).then(function(newPost) {
-		var $div = $("<div></div>");
-		var $a = $("<a></a>").text($title.val()).attr("href", "post.html?postId=" + newPost.id);
-		$div.append($a);
-		$("#posts").append($div);
-		$title.val("");
-		$body.val("");
-	});
+  $.ajax('http://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    data: {
+      title: $title.val(),
+      body: $body.val(),
+      userId: 1
+    }
+  }).then(function(newPost) {
+    var $div = $("<div></div>");
+    var $a = $("<a></a>").text($title.val()).attr("href", "post.html?postId=" + newPost.id);
+    $div.append($a);
+    $("#posts").append($div);
+    $title.val("");
+    $body.val("");
+  });
 });
 </script>
 
