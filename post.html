@@ -5,56 +5,55 @@
 
 <body>
   <h3>Post</h3>
-	<div id="post">
-      <h3>Title</h3><span id="title"></span>
-      <h3>Body</h3><span id="body"></span>
+  <div id="post">
+    <h3>Title</h3><span id="title"></span>
+    <h3>Body</h3><span id="body"></span>
   </div>
 
   <h3>Comments</h3>
-  <div id="comments">
-  </div>
+  <div id="comments"></div>
 </body>
 
 <script src="jquery-3.2.1.min.js"></script>
 <script>
-	var root = 'https://jsonplaceholder.typicode.com';
+var root = 'https://jsonplaceholder.typicode.com';
 
-  function getQueryParam(param) {
-  	var vars = {};
-  	window.location.href.replace( location.hash, '' ).replace(
-  		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-  		function( m, key, value ) { // callback
-  			vars[key] = value !== undefined ? value : '';
-  		}
-  	);
+function getQueryParam(param) {
+  var vars = {};
+  window.location.href.replace( location.hash, '' ).replace(
+    /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+    function( m, key, value ) { // callback
+      vars[key] = value !== undefined ? value : '';
+    }
+  );
 
-  	if ( param ) {
-  		return vars[param] ? vars[param] : null;
-  	}
-  	return vars;
+  if (param) {
+    return vars[param] ? vars[param] : null;
   }
+  return vars;
+}
 
-  var postId = getQueryParam('postId');
+var postId = getQueryParam('postId');
 
-	$.ajax({
-	  url: root + '/posts/' + postId,
-	  method: 'GET'
-	}).then(function(post) {
-    $("#title").text(post.title);
-    $("#body").text(post.body);
-	});
+$.ajax({
+  url: root + '/posts/' + postId,
+  method: 'GET'
+}).then(function(post) {
+  $("#title").text(post.title);
+  $("#body").text(post.body);
+});
 
-  $.ajax({
-	  url: root + '/comments?postId=' + postId,
-	  method: 'GET'
-  }).then(function(comments) {
-	  for (i = 0; i < comments.length; i++) {
-			var $div = $("<div></div>");
-			var $p = $("<p></p>").text(comments[i].body);
-			$div.append($p);
-			$("#comments").append($div);
-	  }
-	});
+$.ajax({
+  url: root + '/comments?postId=' + postId,
+  method: 'GET'
+}).then(function(comments) {
+  for (i = 0; i < comments.length; i++) {
+    var $div = $("<div></div>");
+    var $p = $("<p></p>").text(comments[i].body);
+    $div.append($p);
+    $("#comments").append($div);
+  }
+});
 </script>
 
 </html>
